@@ -6,9 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <fragment
+        android:id="@+id/letter_fragment"
+        android:name="com.example.alphabet.LetterFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recycler_view"/>
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.9"
+        app:layout_constraintTop_toBottomOf="@id/title_bar"
+        app:layout_constraintBaseline_toBaselineOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -16,7 +19,6 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         Button letterButton;
-
         public ViewHolder(View view){
             super(view);
             letterButton = (Button) view.findViewById(R.id.letter_button);
@@ -31,7 +33,16 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.letter_item,parent,false);
-        ViewHolder holder = new ViewHolder(view);
+        final ViewHolder holder = new ViewHolder(view);
+        holder.letterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = holder.getAdapterPosition();
+                Letter letter = mLetterList.get(position);
+                //点击事件
+                replaceFragment(new WordFragment(letter.getLetter()));
+            }
+        });
         return holder;
     }
 
@@ -44,5 +55,13 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return mLetterList.size();
+    }
+
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = fragment.getChildFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.letter_fragment,fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

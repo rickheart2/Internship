@@ -4,9 +4,12 @@
     android:layout_height="wrap_content">
 
     <Button
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/letter_button"
-        android:gravity="center"/>
+        android:gravity="center"
+        />
 
 </LinearLayout>
