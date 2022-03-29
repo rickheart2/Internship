@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +22,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private List<Letter> letterList = new ArrayList<>();
-    private List<Letter> wordList = new ArrayList<>();
 
     private int layout_flag = 1;
     @Override
@@ -30,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initLetters();
+        initWords();
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.letter_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -63,5 +64,19 @@ public class MainActivity extends AppCompatActivity {
             letterList.add(letter);
             temp++;
         }
+    }
+    private void initWords(){
+        SharedPreferences.Editor editor = getSharedPreferences("data",MODE_PRIVATE).edit();
+        String AWords = "admire:actor:agree";
+        String BWords = "button:bag:boy";
+        String CWords = "cat:copy:cold";
+        String DWords = "dog:dead";
+        String EWords = "easy:earth";
+        editor.putString("A",AWords);
+        editor.putString("B",BWords);
+        editor.putString("C",CWords);
+        editor.putString("D",DWords);
+        editor.putString("E",EWords);
+        editor.apply();
     }
 }
