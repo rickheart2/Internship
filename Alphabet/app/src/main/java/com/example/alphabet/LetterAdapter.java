@@ -1,5 +1,6 @@
 package com.example.alphabet;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -25,7 +26,11 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
     private List<Letter> mLetterList;
     private Context mContext;
     private View mView;
+    private MainActivity mActivity;
+    public static List<Letter> wordList = new ArrayList<>();
     private static final String TAG = "LetterAdapter";
+
+
     static class ViewHolder extends RecyclerView.ViewHolder{
         Button letterButton;
         public ViewHolder(View view){
@@ -45,27 +50,23 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
         final ViewHolder holder = new ViewHolder(view);
         mContext = parent.getContext();
         mView = parent.getRootView();
+        mActivity = (MainActivity) mContext;
+
         holder.letterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
                 Letter letter = mLetterList.get(position);
                 //点击事件
-                replaceFragment(new WordFragment(letter.getLetter()));
+                replaceFragment(new WordFragment());
                 SharedPreferences pref = mContext.getSharedPreferences("data",Context.MODE_PRIVATE);
                 String dataString = pref.getString(letter.getLetter(),"");
                 List<String> stringList = new ArrayList<>(Arrays.asList(dataString.split(":")));
-                List<Letter> wordList = new ArrayList<>();
+                wordList.clear();
                 for (String word:stringList){
                     Letter temp = new Letter(word);
                     wordList.add(temp);
-                    Log.d(TAG, word);
                 }
-                RecyclerView recyclerView = (RecyclerView) mView.findViewById(R.id.word_recycler_view);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-                recyclerView.setLayoutManager(linearLayoutManager);
-                WordAdapter adapter = new WordAdapter(wordList);
-                recyclerView.setAdapter(adapter);
             }
         });
         return holder;
@@ -83,9 +84,9 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
     }
 
     private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = fragment.getActivity().getSupportFragmentManager();
+        FragmentManager fragmentManager = mActivity.getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.letter_fragment,fragment);
+        transaction.replace(R.id.data_container,fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/letter_button"
         android:gravity="center"
+        android:textAllCaps="false"
         />
 
 </LinearLayout>
