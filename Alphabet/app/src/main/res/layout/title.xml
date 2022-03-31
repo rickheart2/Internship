@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="0dp"
+    app:layout_constraintHeight_percent="0.1"
     android:background="@color/teal_700"
     >
     <TextView
@@ -15,12 +16,13 @@
         android:layout_marginLeft="15dp"
         android:textColor="@color/white"
         android:textSize="24sp"
-        android:text="Words"
+        android:text="Alphabet"
         android:layout_weight="1"/>
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/swap_layout"
+        android:layout_gravity="center"
         android:src="@drawable/swap_layout"
         android:background="#0000"
         />
