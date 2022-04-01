@@ -35,6 +35,7 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.letter_item,parent,false);
         ViewHolder holder = new ViewHolder(view);
         mContext = parent.getContext();
+
         holder.wordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,6 +47,16 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
                 intent.setAction(Intent.ACTION_WEB_SEARCH);
                 intent.putExtra(SearchManager.QUERY,str);
                 mContext.startActivity(intent);
+            }
+        });
+        holder.wordButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                int position = holder.getAdapterPosition();
+                mWordList.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position,getItemCount());
+                return true;
             }
         });
         return holder;
