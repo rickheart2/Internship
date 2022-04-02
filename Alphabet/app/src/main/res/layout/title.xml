@@ -21,6 +21,16 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/add_button"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/add"
+        android:background="#0000"
+        android:visibility="gone"
+        />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/swap_layout"
         android:layout_gravity="center"
         android:src="@drawable/swap_layout"

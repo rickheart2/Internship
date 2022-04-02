@@ -1,13 +1,18 @@
 package com.example.alphabet;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,12 +30,14 @@ public class WordFragment extends Fragment {
         View view = inflater.inflate(R.layout.word_fragment,container,false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.word_recycler_view);
         wordList = LetterAdapter.wordList;
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getActivity(),2);
         recyclerView.setLayoutManager(linearLayoutManager);
         WordAdapter adapter = new WordAdapter(wordList);
         recyclerView.setAdapter(adapter);
         MainActivity mainActivity = (MainActivity) this.getActivity();
+
         ImageButton button_swap = (ImageButton) mainActivity.findViewById(R.id.swap_layout);
         button_swap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +53,8 @@ public class WordFragment extends Fragment {
                 }
             }
         });
+
+
         return view;
     }
 }

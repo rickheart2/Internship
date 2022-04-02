@@ -1,21 +1,17 @@
 package com.example.alphabet;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -28,6 +24,7 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
     private View mView;
     private MainActivity mActivity;
     public static List<Letter> wordList = new ArrayList<>();
+    public static String contentLetter;
     private static final String TAG = "LetterAdapter";
 
 
@@ -52,20 +49,24 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
         mView = parent.getRootView();
         mActivity = (MainActivity) mContext;
 
+        mActivity.findViewById(R.id.add_button).setVisibility(View.GONE);
         holder.letterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
                 Letter letter = mLetterList.get(position);
+                contentLetter = letter.getLetter();
                 //点击事件
                 replaceFragment(new WordFragment());
                 SharedPreferences pref = mContext.getSharedPreferences("data",Context.MODE_PRIVATE);
                 String dataString = pref.getString(letter.getLetter(),"");
                 List<String> stringList = new ArrayList<>(Arrays.asList(dataString.split(":")));
                 wordList.clear();
-                for (String word:stringList){
-                    Letter temp = new Letter(word);
-                    wordList.add(temp);
+                if(!stringList.isEmpty()) {
+                    for (String word:stringList){
+                        Letter temp = new Letter(word);
+                        wordList.add(temp);
+                    }
                 }
             }
         });
@@ -89,5 +90,6 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
         transaction.replace(R.id.data_container,fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+        mActivity.findViewById(R.id.add_button).setVisibility(View.VISIBLE);
     }
 }
