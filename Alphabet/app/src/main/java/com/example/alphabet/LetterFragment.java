@@ -52,6 +52,7 @@ public class LetterFragment extends Fragment {
     }
 
     private void initLetters(){
+        letterList.clear();
         Character temp = 'A';
         for (int i = 0; i < 26; i++) {
             String temp1 = temp.toString();
